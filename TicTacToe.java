@@ -12,20 +12,26 @@ public class TicTacToe {
     public static char playerTurn = 'X';
     public static boolean winner = true;
     public static byte player_X, player_O = 0;
+    public static boolean draw = false;
+    public static byte counter = 0;
 
     public static void main(String[] args) {
 
-        byte i = 0;
-
         printBoard();
 
-        while(winnerCheck()) {
+        while(winnerCheck() && counter != 9) {
             playerTurn(playerTurn);
-            i++;
         }
 
-        if(player_X == 1) System.out.println("Player X wins!");
-        else System.out.println("Player O wins!");
+        
+
+        if(player_X == 1) {
+            System.out.println("Player X wins!");
+        } else if (counter == 9) {
+            System.out.println("It's a draw!");
+        } else {
+            System.out.println("Player O wins!");
+        }
     }
 
     public static void printBoard() {
@@ -43,13 +49,21 @@ public class TicTacToe {
 
         byte row, col = 0;
         
-        System.out.print("Enter a row (0, 1, or 2) for player " + player + " : ");
-        row = input.nextByte();
+        while(true) {
+            System.out.print("Enter a row (0, 1, or 2) for player " + player + " : ");
+            row = input.nextByte();
 
-        System.out.print("Enter a column (0, 1, or 2) for player " + player + " : ");
-        col = input.nextByte();
+            System.out.print("Enter a column (0, 1, or 2) for player " + player + " : ");
+            col = input.nextByte();
 
-        board[row][col] = player;
+            if(Character.valueOf(board[row][col]) == (char)0) {
+                board[row][col] = player;
+                break;
+            } else {
+                System.out.println("\nThe selected cell is already occupied! Try again.\n");
+                printBoard();
+            }
+        }
 
         printBoard();
 
@@ -97,9 +111,27 @@ public class TicTacToe {
 			} else if (line.equals("OOO")) {
 				player_O = 1;
             }
+
+
         }
 
-        if(player_O <= 0 && player_X <= 0) return true;
-        else return false;
+        counter = 0;
+
+        for(char[] array_1D: board) {
+            for(char i: array_1D) {
+                if(i != (char)0) {
+                    counter++;
+                }
+            }
+        }
+
+
+        if(player_O <= 0 && player_X <= 0) {
+            return true;
+        } else if(counter == 9) {
+            return false;
+        } else {
+            return false;
+        }
     }
 }
