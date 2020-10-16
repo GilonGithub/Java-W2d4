@@ -9,15 +9,23 @@ public class TicTacToe {
 
     public static char[][] board = new char[3][3];
     public static Scanner input = new Scanner(System.in);
-    public static char player = 'X';
+    public static char playerTurn = 'X';
+    public static boolean winner = true;
+    public static byte player_X, player_O = 0;
 
     public static void main(String[] args) {
 
+        byte i = 0;
+
         printBoard();
 
+        while(winnerCheck()) {
+            playerTurn(playerTurn);
+            i++;
+        }
 
-        playerTurn(player);
-
+        if(player_X == 1) System.out.println("Player X wins!");
+        else System.out.println("Player O wins!");
     }
 
     public static void printBoard() {
@@ -46,10 +54,52 @@ public class TicTacToe {
         printBoard();
 
         if (player == 'X') {
-            player = 'O';
+            playerTurn = 'O';
         } else {
-            player = 'X';
+            playerTurn = 'X';
         }
 
+    }
+
+    public static boolean winnerCheck() {
+
+        for (int i = 0; i < 8; i++) {
+			String line = null;
+			switch (i) {
+			case 0:
+				line = Character.toString(board[0][0]) + Character.toString(board[0][1]) + Character.toString(board[0][2]); //first row
+				break;
+			case 1:
+				line = Character.toString(board[1][0]) + Character.toString(board[1][1]) + Character.toString(board[1][2]); //second row
+				break;
+			case 2:
+                line = Character.toString(board[2][0]) + Character.toString(board[2][1]) + Character.toString(board[2][2]); //third row
+				break;
+			case 3:
+                line = Character.toString(board[0][0]) + Character.toString(board[1][1]) + Character.toString(board[2][2]); //diagonal from top-left
+				break;
+			case 4:
+                line = Character.toString(board[0][0]) + Character.toString(board[1][0]) + Character.toString(board[2][0]); //first column
+				break;
+			case 5:
+                line = Character.toString(board[0][1]) + Character.toString(board[1][1]) + Character.toString(board[2][1]); //second column
+				break;
+			case 6:
+                line = Character.toString(board[0][2]) + Character.toString(board[1][2]) + Character.toString(board[2][2]); //third column
+				break;
+			case 7:
+                line = Character.toString(board[0][2]) + Character.toString(board[1][1]) + Character.toString(board[2][0]); //diagonal from top-right
+				break;
+            }
+        
+			if (line.equals("XXX")) {
+				player_X = 1;
+			} else if (line.equals("OOO")) {
+				player_O = 1;
+            }
+        }
+
+        if(player_O <= 0 && player_X <= 0) return true;
+        else return false;
     }
 }
