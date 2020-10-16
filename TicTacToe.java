@@ -19,7 +19,7 @@ public class TicTacToe {
 
         printBoard();
 
-        while(winnerCheck() && counter != 9) {
+        while(winnerCheck()) {
             playerTurn(playerTurn);
         }
 
@@ -125,11 +125,10 @@ public class TicTacToe {
             }
         }
 
-
-        if(player_O <= 0 && player_X <= 0) {
-            return true;
-        } else if(counter == 9) {
+        if(counter == 9) {
             return false;
+        } else if(player_O <= 0 && player_X <= 0) {
+            return true;
         } else {
             return false;
         }
