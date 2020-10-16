@@ -50,11 +50,28 @@ public class TicTacToe {
         byte row, col = 0;
         
         while(true) {
-            System.out.print("Enter a row (0, 1, or 2) for player " + player + " : ");
-            row = input.nextByte();
 
-            System.out.print("Enter a column (0, 1, or 2) for player " + player + " : ");
-            col = input.nextByte();
+            while(true) {
+                System.out.print("Enter a row (0, 1, or 2) for player " + player + " : ");
+                row = input.nextByte();
+
+                if(row >= 0 && row <= 2) {
+                    break;
+                } else {
+                    System.out.println("Invalid pick! Try again...");
+                }
+            }
+
+            while(true) {
+                System.out.print("Enter a column (0, 1, or 2) for player " + player + " : ");
+                col = input.nextByte();
+
+                if(col >= 0 && col <= 2) {
+                    break;
+                } else {
+                    System.out.println("Invalid pick! Try again...");
+                }
+            }
 
             if(Character.valueOf(board[row][col]) == (char)0) {
                 board[row][col] = player;
